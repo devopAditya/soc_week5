@@ -1,0 +1,17 @@
+class Solution {
+public:
+    void buildPreorder(TreeNode* node, vector<int>& result) {
+        if (node == nullptr) {
+            return;
+        }
+        result.push_back(node->val);
+        buildPreorder(node->left, result);
+        buildPreorder(node->right, result);
+    }
+
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> result;
+        buildPreorder(root, result);
+        return result;
+    }
+};
