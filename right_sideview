@@ -1,0 +1,17 @@
+class Solution {
+public:
+    void collectRightView(TreeNode* node, vector<int>& view, int level) {
+        if (node == nullptr) {
+            return;
+        }
+        if (level > view.size()) view.push_back(node->val);
+        collectRightView(node->right, view, level + 1);
+        collectRightView(node->left, view, level + 1);
+    }
+
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> view;
+        collectRightView(root, view, 1);
+        return view;
+    }
+};
