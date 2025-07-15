@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void buildZigzag(queue<TreeNode*>& nodeQueue, vector<vector<int>>& levels) {
+        if (nodeQueue.empty()) return;
+
+        int levelSize = nodeQueue.size();
+        vector<int> currentLevel;
+
+        for (int i = 0; i < levelSize; ++i) {
+            TreeNode* currentNode = nodeQueue.front();
+            nodeQueue.pop();
+            if (currentNode == nullptr) continue;
+
+            currentLevel.push_back(currentNode->val);
+            if (currentNode->left) nodeQueue.push(currentNode->left);
+            if (currentNode->right) nodeQueue.push(currentNode->right);
+        }
+
+        if (!currentLevel.empty()) {
+            if (levels.size() % 2 == 1) {
+                reverse(currentLevel.begin(), currentLevel.end());
+            }
+            levels.push_back(currentLevel);
+        }
+        buildZigzag(nodeQueue, levels);
+    }
+
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> levels;
+        if (root == nullptr) return levels;
+
+        queue<TreeNode*> nodeQueue;
+        nodeQueue.push(root);
+        buildZigzag(nodeQueue, levels);
+
+        return levels;
+    }
+};
